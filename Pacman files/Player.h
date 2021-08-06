@@ -75,7 +75,8 @@ public:
 //
 	Player(sf::String file, float x, float y, int width, int height);
 	
-	void  update(float time);
+	void move(float & currentFrame, float time);
+	void update(float time);
 
 };
 

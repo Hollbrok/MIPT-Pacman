@@ -1,6 +1,7 @@
 #include "libraries.hpp"
-#include "Player.h"
 
+#include "Player.h"
+#include "MIPT_pacman.hpp"
 
 int main()
 {
@@ -10,7 +11,7 @@ int main()
 
 	sf::Clock clock;
 
-	float CurrentFrame{ 0 };
+	float currentFrame{ 0 };
 	float time{0};
 
 	float fps{ 0 };
@@ -30,39 +31,8 @@ int main()
 				window.close();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			mainHero.setMoveDir(1);
-			mainHero.setSpeed(0.1);
-			CurrentFrame += 0.01 * time;
-			if (CurrentFrame > 3) CurrentFrame -= 3;
-			mainHero.getSprite().setTextureRect(sf::IntRect(79 + int(CurrentFrame) * (25 + 7), 40, 25, 32)); //через объект mainHero класса player меняем спрайт, делая анимацию
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			mainHero.setMoveDir(3);
-			mainHero.setSpeed(0.1);
-			CurrentFrame += 0.01 * time;
-			if (CurrentFrame > 3) CurrentFrame -= 3;
-			mainHero.getSprite().setTextureRect(sf::IntRect(76 + int(CurrentFrame) * (25 + 7), 72, 25, 32)); //через объект mainHero класса player меняем спрайт, делая анимацию
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		{
-			mainHero.setMoveDir(2);
-			mainHero.setSpeed(0.1);
-			CurrentFrame += 0.01 * time;
-			if (CurrentFrame > 3) CurrentFrame -= 3;
-			mainHero.getSprite().setTextureRect(sf::IntRect(77 + int(CurrentFrame) * (28 + 4), 8, 28, 32)); //через объект mainHero класса player меняем спрайт, делая анимацию
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{
-			mainHero.setMoveDir(0);
-			mainHero.setSpeed(0.1);
-			CurrentFrame += 0.01 * time;
-			if (CurrentFrame > 3) CurrentFrame -= 3;
-			mainHero.getSprite().setTextureRect(sf::IntRect(76 + int(CurrentFrame) * (28 + 4), 104, 28, 32)); //через объект mainHero класса player меняем спрайт, делая анимацию
-		}
-
+		if (isPressedMovementButton())
+			mainHero.move(currentFrame, time);
 
 		mainHero.update(time);
 		
@@ -79,7 +49,7 @@ int main()
 	}
 
 
-
+	
 
 	return 0;
 }
