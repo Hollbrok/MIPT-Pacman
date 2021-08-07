@@ -1,12 +1,12 @@
-#include "libraries.hpp"
-
 #include "Player.h"
 #include "GameMap.h"
-#include "MIPT_pacman.hpp"
+#include "playerView.h"
+#include "MIPT_pacman.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(640, 480), "MIPT Pacman");
+	playerView.reset(sf::FloatRect(0, 0, 640, 480));
 
 	Player mainHero("main3.png", 320, 240, 25, 32);
 	GameMap map{};
@@ -34,13 +34,19 @@ int main()
 		}
 
 		if (isPressedMovementButton())
+		{
 			mainHero.move(currentFrame, time);
+			getView(mainHero.getX(), mainHero.getY());
+		}
 
 		mainHero.update(time);
 		
 		start = std::chrono::high_resolution_clock::now();
 
+		window.setView(playerView);
 		window.clear();
+		
+		
 		map.draw(window);
 		window.draw(mainHero.getSprite());
 		window.display();

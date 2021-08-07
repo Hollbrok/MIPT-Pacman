@@ -1,6 +1,9 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #pragma once
 
-#include "libraries.hpp"
+#include "libraries.h"
 
 class Player
 {
@@ -23,6 +26,8 @@ private:
 	sf::Image image_;
 	sf::Texture texture_;
 	sf::Sprite sprite_;
+
+	int goldCounter_ = 0;
 
 public:
 
@@ -77,6 +82,10 @@ public:
 	
 	void move(float & currentFrame, float time);
 	void update(float time);
+	void gameLogic();
 
 };
 
+
+
+#endif

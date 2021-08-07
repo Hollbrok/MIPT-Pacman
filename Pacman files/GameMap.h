@@ -1,6 +1,10 @@
+#ifndef GAMEMAP_H
+#define GAMEMAP_H
+
+
 #pragma once
 
-#include "libraries.hpp"
+#include "libraries.h"
 
 class GameMap
 {
@@ -16,4 +20,6 @@ public:
 
 	void draw(sf::RenderWindow & window);
 };
+
+#endif
 

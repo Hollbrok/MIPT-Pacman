@@ -1,4 +1,7 @@
 #include "MIPT_pacman.hpp"
+#include "libraries.hpp"
+
+const int BAD_DIRECTION = 100;
 
 bool isPressedUpButton()
 {
@@ -39,4 +42,5 @@ int defineDirection()
 		return 2;
 	if (isPressedRightButton())
 		return 3;
+	return BAD_DIRECTION;
 }
