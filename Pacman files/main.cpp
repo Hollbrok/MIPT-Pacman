@@ -1,6 +1,7 @@
 #include "libraries.hpp"
 
 #include "Player.h"
+#include "GameMap.h"
 #include "MIPT_pacman.hpp"
 
 int main()
@@ -8,6 +9,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(640, 480), "MIPT Pacman");
 
 	Player mainHero("main3.png", 320, 240, 25, 32);
+	GameMap map{};
 
 	sf::Clock clock;
 
@@ -39,6 +41,7 @@ int main()
 		start = std::chrono::high_resolution_clock::now();
 
 		window.clear();
+		map.draw(window);
 		window.draw(mainHero.getSprite());
 		window.display();
 
