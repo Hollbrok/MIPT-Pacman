@@ -62,8 +62,6 @@ sf::String TileMap[HEIGHT_MAP] = {
 	"000000000000000000000000000000000000000000000000",
 };
 
-
-
 Player::Player(sf::String file, float x, float y, int width, int height) :
 	x_(x),
 	y_(y),

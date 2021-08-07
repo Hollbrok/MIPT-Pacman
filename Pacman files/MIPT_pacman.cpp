@@ -1,5 +1,5 @@
-#include "MIPT_pacman.hpp"
-#include "libraries.hpp"
+#include "MIPT_pacman.h"
+#include "libraries.h"
 
 const int BAD_DIRECTION = 100;
 

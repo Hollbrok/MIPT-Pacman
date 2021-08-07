@@ -2,6 +2,8 @@
 #include "GameMap.h"
 #include "playerView.h"
 #include "MIPT_pacman.h"
+#include "drawText.h"
+
 
 int main()
 {
@@ -18,6 +20,12 @@ int main()
 
 	float fps{ 0 };
 	std::chrono::high_resolution_clock::time_point start;
+
+	sf::Font mainFont;
+	mainFont.loadFromFile("text/1.ttf");
+
+	sf::Text goldCollectedText("", mainFont, 20);
+	goldCollectedText.setFillColor(sf::Color::Black);
 
 
 	while (window.isOpen())
@@ -37,6 +45,7 @@ int main()
 		{
 			mainHero.move(currentFrame, time);
 			getView(mainHero.getX(), mainHero.getY());
+
 		}
 
 		mainHero.update(time);
@@ -48,7 +57,11 @@ int main()
 		
 		
 		map.draw(window);
+
 		window.draw(mainHero.getSprite());
+
+		drawText(window, goldCollectedText, mainHero);
+
 		window.display();
 
 		fps = (float)1e9 / (float)std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count();

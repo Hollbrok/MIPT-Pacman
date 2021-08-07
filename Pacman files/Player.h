@@ -60,6 +60,9 @@ public:
 	sf::Sprite & getSprite() { return sprite_; }
 	const sf::Sprite & getSprite() const { return sprite_; }
 
+	int & getGold() { return goldCounter_; }
+	const int & getGold() const { return goldCounter_; }
+
 
 // SETTERS
 
