@@ -5,6 +5,9 @@
 
 #include "libraries.h"
 
+#include "GameMap.h"
+
+
 class Player
 {
 private:
@@ -29,6 +32,8 @@ private:
 	sf::View * playerView_;
 
 	int goldCounter_ = 0;
+
+	GameMap gameMap_;
 
 public:
 
@@ -67,6 +72,9 @@ public:
 	sf::View & getView() { return *playerView_; }
 	const sf::View & getView() const { return *playerView_; }
 
+	GameMap& getMap() { return gameMap_; }
+	const GameMap& getMap() const { return gameMap_; }
+
 
 // SETTERS
 
@@ -84,6 +92,8 @@ public:
 
 	void setView(sf::View * playerView) { playerView_ = playerView; };
 
+	void setMap(GameMap& map) { gameMap_ = map; }
+
 //
 	Player(sf::String file, float x, float y, int width, int height);
 	
@@ -91,6 +101,7 @@ public:
 	void move(float & currentFrame, float time);
 	void update(float time);
 	void gameLogic();
+	void cameraMovement(sf::RenderWindow& window, float time, bool needMouseCoords = false);
 
 };
 

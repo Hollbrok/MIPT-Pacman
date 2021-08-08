@@ -1,5 +1,4 @@
 #include "Player.h"
-
 #include "drawText.h"
 
 void drawText(sf::RenderWindow & window, sf::Text & goldCollectedText, Player & mainHero)

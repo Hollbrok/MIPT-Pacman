@@ -2,65 +2,9 @@
 #include "MIPT_pacman.h"
 
 #include "GameMap.h"
+#include "Consts.h"
 
 
-const int UP = 0;
-const int LEFT = 1;
-const int DOWN = 2;
-const int RIGHT = 3;
-
-const char defaultMapTile = ' ';
-const char waterTile = 'w';
-const char bonfireTile = 'f';
-const char borderTile = '0';
-const char goldTile = 'g';
-const char portalTile = 'p';
-
-const int HEIGHT_MAP = 34;
-const int WIDTH_MAP = 48;
-
-const int portal1_x = 10;
-const int portal1_y = 12;
-
-const int portal2_x = 25;
-const int portal2_y = 30;
-
-sf::String TileMap[HEIGHT_MAP] = {
-	"000000000000000000000000000000000000000000000000",
-	"0                                              0",
-	"0   wwwwwwwwwww                                0",
-	"0   wwwwwwwwwww                      g         0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                   f                          0",
-	"0                                              0",
-	"0         g                                    0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0        g                                     0",
-	"0                                              0",
-	"0                                     g        0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"0                         g                    0",
-	"0                                              0",
-	"0                                              0",
-	"0                                              0",
-	"000000000000000000000000000000000000000000000000",
-};
 
 Player::Player(sf::String file, float x, float y, int width, int height) :
 	x_(x),
@@ -159,11 +103,10 @@ void Player::gameLogic()
 
 	for (int j = int(x_ / 20); j < (x_ + width_) / 20; j++)
 	{
-		//std::cout << "j " << j;
-		for (int i = int(y_ / 21); i < (y_ + height_) / 21; i++)
+		for (int i = int(y_ / 21) + 1; i < (y_ + height_) / 21; i++)
 		{
 			//std::cout << "\ni " << i << std::endl;
-			if (TileMap[i][j] == borderTile)
+			if (gameMap_.stringMap_[i][j] == borderTile)
 			{
 				std::cout << "borderTile" << std::endl;
 				if (dy_ > 0)
@@ -176,20 +119,20 @@ void Player::gameLogic()
 					x_ = j * 20 + 20;
 
 			}
-			else if (TileMap[i][j] == bonfireTile)
+			else if (gameMap_.stringMap_[i][j] == bonfireTile)
 			{
 				std::cout << "bonfireTile" << std::endl;
 				x_ = 320;
 				y_ = 340;
-				TileMap[i][j] = defaultMapTile;
+				gameMap_.stringMap_[i][j] = defaultMapTile;
 			}
-			else if (TileMap[i][j] == goldTile)
+			else if (gameMap_.stringMap_[i][j] == goldTile)
 			{
-				TileMap[i][j] = defaultMapTile;
+				gameMap_.stringMap_[i][j] = defaultMapTile;
 				goldCounter_++;
 				std::cout << "gold: " << goldCounter_ << std::endl;
 			}
-			else if (TileMap[i][j] == portalTile)
+			else if (gameMap_.stringMap_[i][j] == portalTile)
 			{
 				int newExit_x = 0;
 				int newExit_y = 0;
@@ -234,38 +177,25 @@ void Player::gameLogic()
 
 }
 
-
-
-GameMap::GameMap()
+void Player::cameraMovement(sf::RenderWindow & window, float time, bool needMouseCoords)
 {
-	image_.loadFromFile("images/map/tiles_set.png");
-	texture_.loadFromImage(image_);
-	sprite_.setTexture(texture_);
+	sf::Vector2i localPosition = sf::Mouse::getPosition(window);					// camera movement
 
-	TileMap[portal1_y][portal1_x] = portalTile;
-	TileMap[portal2_y][portal2_x] = portalTile;
-}
+	int cameraMoveDir = getCameraMoveDirection(localPosition.x, localPosition.y, window.getSize().x, window.getSize().y);
 
-void GameMap::draw(sf::RenderWindow& window)
-{
-	for (int i = 0; i < HEIGHT_MAP; i++)
-		for (int j = 0; j < WIDTH_MAP; j++)
-		{
-			if (TileMap[i][j] == defaultMapTile)
-				sprite_.setTextureRect(sf::IntRect(132, 40, 20, 21));
-			else if (TileMap[i][j] == waterTile)
-				sprite_.setTextureRect(sf::IntRect(192, 239, 20, 21));
-			else if (TileMap[i][j] == bonfireTile)
-				sprite_.setTextureRect(sf::IntRect(192, 1095, 20, 21));
-			else if (TileMap[i][j] == borderTile)
-				sprite_.setTextureRect(sf::IntRect(172, 239, 20, 21));
-			else if (TileMap[i][j] == goldTile)
-				sprite_.setTextureRect(sf::IntRect(450, 1214, 20, 21));
-			else if (TileMap[i][j] == portalTile)
-				sprite_.setTextureRect(sf::IntRect(191, 617, 21, 21));
+	if (cameraMoveDir == BAD_DIRECTION)
+		;// we dont need to move camera
+	else if (cameraMoveDir == UP)
+		getView().move(0, -0.2 * time);
+	else if (cameraMoveDir == LEFT)
+		getView().move(-0.2 * time, 0);
+	else if (cameraMoveDir == DOWN)
+		getView().move(0, 0.2 * time);
+	else if (cameraMoveDir == RIGHT)
+		getView().move(0.2 * time, 0);
+	else
+		std::cout << "LOGIC_ERROR in line : " << __LINE__ << std::endl;
 
-			sprite_.setPosition(j * 20, i * 21);
-
-			window.draw(sprite_);
-		}
+	if(needMouseCoords)
+		std::cout << "LocPos : " << localPosition.x << ' ' << localPosition.y << std::endl;
 }

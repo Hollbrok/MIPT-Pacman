@@ -3,13 +3,9 @@
 #include "playerView.h"
 #include "MIPT_pacman.h"
 #include "drawText.h"
+#include "Consts.h"
+#include "DEBUG_STAFF.h"
 
-const int BAD_DIRECTION = 100;
-
-const int UP = 0;
-const int LEFT = 1;
-const int DOWN = 2;
-const int RIGHT = 3;
 
 int main()
 {
@@ -20,6 +16,8 @@ int main()
 	mainHero.setView(&playerView);
 
 	GameMap map{};
+
+	mainHero.setMap(map);
 
 	sf::Clock clock;
 
@@ -59,35 +57,23 @@ int main()
 
 		}
 
-		/* sf::Vector2i localPosition = sf::Mouse::getPosition(window);					// camera movement
-		
-		int cameraMoveDir = getCameraMoveDirection(localPosition.x, localPosition.y, window.getSize().x, window.getSize().y);
+		if(needMouseMovement)
+			mainHero.cameraMovement(window, time, needMouseCoords); // если нужно мышкой двигать карту. третья константа еще и в добавок нужно выводить координаты положения мышки
+		else if (needMouseCoords)									// если движение карты не нужно, НО нужны координаты мышки, то выводим их
+		{
+			sf::Vector2i localPosition = sf::Mouse::getPosition(window);
+			std::cout << "LocPos : " << localPosition.x << ' ' << localPosition.y << std::endl;
+		}
 
-		if (cameraMoveDir == BAD_DIRECTION)
-			;// we dont need to move camera
-		else if (cameraMoveDir == UP)
-			mainHero.getView().move(0, -0.2 * time);
-		else if (cameraMoveDir == LEFT)
-			mainHero.getView().move(-0.2 * time, 0);
-		else if (cameraMoveDir == DOWN)
-			mainHero.getView().move(0, 0.2 * time);
-		else if (cameraMoveDir == RIGHT)
-			mainHero.getView().move(0.2 * time, 0);
-		else
-			std::cout << "LOGIC_ERROR in line : " << __LINE__ << std::endl;
-		
-		//std::cout << "LocPos : " << localPosition.x << ' ' << localPosition.y << std::endl;
-		*/
 
 		mainHero.update(time);
 		start = std::chrono::high_resolution_clock::now();
 
 		window.setView(playerView);
 
-
 		window.clear();
 
-		map.draw(window);
+		mainHero.getMap().draw(window);
 		window.draw(mainHero.getSprite());
 		drawText(window, goldCollectedText, mainHero);
 
