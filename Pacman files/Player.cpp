@@ -79,6 +79,7 @@ Player::Player(sf::String file, float x, float y, int width, int height) :
 	texture_.loadFromImage(image_);								// ассоциируем текстуру с изображением
 	sprite_.setTexture(texture_);								// заливаем спрайт текстурой
 	sprite_.setTextureRect(sf::IntRect(0, 150, width_, height_));	// задаем спрайту один прямоугольник нужного размера персонажа.
+	//sprite_.scale(0.7f, 0.7f);
 }
 
 void Player::move(float & currentFrame, float time)
@@ -152,13 +153,20 @@ void Player::update(float time) // time -- время SFML
 
 void Player::gameLogic()
 {
+	float newX = x_;
+	float newY = y_;
+	bool wasPortal = false;
+
 	for (int j = int(x_ / 20); j < (x_ + width_) / 20; j++)
+	{
+		//std::cout << "j " << j;
 		for (int i = int(y_ / 21); i < (y_ + height_) / 21; i++)
 		{
+			//std::cout << "\ni " << i << std::endl;
 			if (TileMap[i][j] == borderTile)
 			{
 				std::cout << "borderTile" << std::endl;
-				if(dy_ > 0)
+				if (dy_ > 0)
 					y_ = i * 21 - height_;
 				if (dy_ < 0)
 					y_ = i * 21 + 21;
@@ -166,7 +174,7 @@ void Player::gameLogic()
 					x_ = j * 20 - width_;
 				if (dx_ < 0)
 					x_ = j * 20 + 20;
-						
+
 			}
 			else if (TileMap[i][j] == bonfireTile)
 			{
@@ -186,36 +194,43 @@ void Player::gameLogic()
 				int newExit_x = 0;
 				int newExit_y = 0;
 
-
-				if (dx_ > 0)
+				if (dx_ > 0)	  // move RIGHT
 					newExit_x = 1;
-				else if (dx_ < 0)
+				else if (dx_ < 0) // move LEFT
 					newExit_x = -1;
-				else
+				else			  // none MOVE
 					newExit_x = 0;
 
-				if (dy_ > 0)
+				if (dy_ > 0)      // move DOWN
 					newExit_y = 1;
-				else if (dy_ < 0)
+				else if (dy_ < 0) // move UP
 					newExit_y = -1;
-				else 
+				else			  // none MOVE
 					newExit_y = 0;
 
 				if (i == portal1_y)
 				{
-					std::cout << "portal 1\n";
-					x_ = (portal2_x + newExit_x * 2) * 20;
-					y_ = (portal2_y + newExit_y * 2) * 21;
+					//std::cout << "portal 1\n";
+					newX = (portal2_x + newExit_x * 1.8f) * 20;
+					newY = (portal2_y + newExit_y * 1.8f) * 21;
 				}
 				else
 				{
-					std::cout << "portal 2\n";
-					x_ = (portal1_x  + newExit_x * 2) * 20;
-					y_ = (portal1_y  + newExit_y * 2) * 21;
+					//std::cout << "portal 2\n";
+					newX = (portal1_x + newExit_x * 1.8f) * 20;
+					newY = (portal1_y + newExit_y * 1.8f) * 21;
 				}
+
+				wasPortal = true;
 			}
 		}
+	}
 
+	if (wasPortal)
+	{
+		x_ = newX;
+		y_ = newY;
+	}
 
 }
 

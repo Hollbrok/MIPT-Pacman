@@ -26,6 +26,7 @@ private:
 	sf::Image image_;
 	sf::Texture texture_;
 	sf::Sprite sprite_;
+	sf::View * playerView_;
 
 	int goldCounter_ = 0;
 
@@ -63,6 +64,9 @@ public:
 	int & getGold() { return goldCounter_; }
 	const int & getGold() const { return goldCounter_; }
 
+	sf::View & getView() { return *playerView_; }
+	const sf::View & getView() const { return *playerView_; }
+
 
 // SETTERS
 
@@ -78,11 +82,12 @@ public:
 	void setWidth(int width) { width_ = width; }
 	void setHeight(int height) { height_ = height; }
 
-
+	void setView(sf::View * playerView) { playerView_ = playerView; };
 
 //
 	Player(sf::String file, float x, float y, int width, int height);
 	
+
 	void move(float & currentFrame, float time);
 	void update(float time);
 	void gameLogic();

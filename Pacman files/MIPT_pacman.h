@@ -13,4 +13,6 @@ bool isPressedMovementButton();
 
 int defineDirection();
 
+int getCameraMoveDirection(int x, int y, int windowSizeX, int windowSizeY);
+
 #endif

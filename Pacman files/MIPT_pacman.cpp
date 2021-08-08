@@ -3,6 +3,11 @@
 
 const int BAD_DIRECTION = 100;
 
+const int UP = 0;
+const int LEFT = 1;
+const int DOWN = 2;
+const int RIGHT = 3;
+
 bool isPressedUpButton()
 {
 	return	sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
@@ -42,5 +47,18 @@ int defineDirection()
 		return 2;
 	if (isPressedRightButton())
 		return 3;
+	return BAD_DIRECTION;
+}
+
+int getCameraMoveDirection(int x, int y, int windowSizeX, int windowSizeY)
+{
+	if (y < 2)
+		return UP;
+	if (x < 2)
+		return LEFT;
+	if (y > windowSizeY - 2)
+		return DOWN;
+	if (x > windowSizeX - 2)
+		return RIGHT;
 	return BAD_DIRECTION;
 }
