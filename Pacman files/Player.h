@@ -33,9 +33,11 @@ private:
 
 	int goldCounter_ = 0;
 
-	GameMap gameMap_;
+	GameMap & gameMap_;
 
 public:
+
+	int lastGoldCounter = 0;
 
 // GETTERS
 
@@ -95,7 +97,7 @@ public:
 	void setMap(GameMap& map) { gameMap_ = map; }
 
 //
-	Player(sf::String file, float x, float y, int width, int height);
+	Player(sf::String file, float x, float y, int width, int height, GameMap & map);
 	
 
 	void move(float & currentFrame, float time);

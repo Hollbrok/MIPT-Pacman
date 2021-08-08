@@ -6,7 +6,7 @@
 
 
 
-Player::Player(sf::String file, float x, float y, int width, int height) :
+Player::Player(sf::String file, float x, float y, int width, int height, GameMap& map) :
 	x_(x),
 	y_(y),
 	dx_(0),
@@ -16,7 +16,9 @@ Player::Player(sf::String file, float x, float y, int width, int height) :
 	width_(width),
 	height_(height),
 	file_(file),
-	goldCounter_(0)
+	goldCounter_(0),
+	gameMap_(map)
+
 {
 	image_.loadFromFile("images/" + file_);						// ассоциируем image_ с нашим изображением вместе с адресом папки расположения
 	//image_.createMaskFromColor(sf::Color(255, 255, 255));		// Если нужно убрать лишний цвет с изображения
@@ -129,8 +131,19 @@ void Player::gameLogic()
 			else if (gameMap_.stringMap_[i][j] == goldTile)
 			{
 				gameMap_.stringMap_[i][j] = defaultMapTile;
+
 				goldCounter_++;
+				lastGoldCounter++;
+
+				std::cout << "lastGeneratedNumberOfCoints: " << gameMap_.lastGeneratedNumberOfCoints << std::endl;
 				std::cout << "gold: " << goldCounter_ << std::endl;
+				std::cout << "lastGoldCounter: " << lastGoldCounter << std::endl;
+
+				if (lastGoldCounter == gameMap_.lastGeneratedNumberOfCoints)
+				{
+					gameMap_.generateMap();
+					lastGoldCounter = 0;
+				}
 			}
 			else if (gameMap_.stringMap_[i][j] == portalTile)
 			{

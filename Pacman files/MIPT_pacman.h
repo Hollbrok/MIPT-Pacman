@@ -15,4 +15,6 @@ int defineDirection();
 
 int getCameraMoveDirection(int x, int y, int windowSizeX, int windowSizeY);
 
+int getRandomNumber(int min, int max);
+
 #endif

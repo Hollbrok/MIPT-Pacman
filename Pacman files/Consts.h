@@ -23,6 +23,8 @@ static const int portal1_y = 12;
 static const int portal2_x = 25;
 static const int portal2_y = 30;
 
+static const int MaxGoldAmount = 60;
+
 
 #pragma once
 

@@ -12,12 +12,14 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 960), "MIPT Pacman");
 	playerView.reset(sf::FloatRect(0, 0, 640, 480));
 
-	Player mainHero("main3.png", 320, 240, 25, 32);
+	GameMap map{};
+	map.generateMap();
+
+	Player mainHero("main3.png", 320, 240, 25, 32, map);
 	mainHero.setView(&playerView);
 
-	GameMap map{};
-
-	mainHero.setMap(map);
+	
+	//mainHero.setMap(map);
 
 	sf::Clock clock;
 

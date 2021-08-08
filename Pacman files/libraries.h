@@ -7,5 +7,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include <cstdlib> 
  
 #endif
