@@ -15,7 +15,7 @@ int main()
 	GameMap map{};
 	map.generateMap();
 
-	Player mainHero("main3.png", 320, 240, 25, 32, map);
+	Player mainHero(sf::String("main3.png"), sf::String("MAIN"), 320, 240, 25, 32, map);
 	mainHero.setView(&playerView);
 
 	
