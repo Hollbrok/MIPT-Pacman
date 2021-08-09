@@ -13,7 +13,7 @@ class Player : public PlayerBase
 {
 private:
 
-	enum 
+	enum class MoveDir 
 	{
 		up, left, down, right, stay
 	} stay_;

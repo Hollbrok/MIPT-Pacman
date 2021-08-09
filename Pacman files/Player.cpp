@@ -8,7 +8,7 @@
 
 Player::Player(sf::String file, sf::String name, float x, float y, int width, int height, GameMap& map) :
 	PlayerBase(file, name, x, y, width, height, map),
-	stay_(stay),
+	stay_(MoveDir::stay),
 	goldCounter_(0)
 {
 }

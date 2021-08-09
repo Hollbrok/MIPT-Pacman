@@ -5,6 +5,7 @@
 #include "drawText.h"
 #include "Consts.h"
 #include "DEBUG_STAFF.h"
+#include "Enemy.h"
 
 
 int main()
@@ -18,6 +19,8 @@ int main()
 	Player mainHero(sf::String("main3.png"), sf::String("MAIN"), 320, 240, 25, 32, map);
 	mainHero.setView(&playerView);
 
+	Enemy enemy1(sf::String("sonic.gif"), sf::String("1Enemy"), 400, 120, 42, 34, map);
+	Enemy enemy2(sf::String("sonic.gif"), sf::String("2Enemy"), 500, 400, 46, 35, map);
 	
 	//mainHero.setMap(map);
 
@@ -69,6 +72,9 @@ int main()
 
 
 		mainHero.update(time);
+		enemy1.update(time);
+		enemy2.update(time);
+
 		start = std::chrono::high_resolution_clock::now();
 
 		window.setView(playerView);
@@ -76,7 +82,11 @@ int main()
 		window.clear();
 
 		mainHero.getMap().draw(window);
+		
 		window.draw(mainHero.getSprite());
+		window.draw(enemy1.getSprite());
+		window.draw(enemy2.getSprite());
+
 		drawText(window, goldCollectedText, mainHero);
 
 		window.display();

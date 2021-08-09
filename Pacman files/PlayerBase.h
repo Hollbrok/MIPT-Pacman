@@ -94,11 +94,5 @@ public:
 
 	//
 	PlayerBase(sf::String file, sf::String name, float x, float y, int width, int height, GameMap & map);
-
-	virtual void move(float& currentFrame, float time) = 0;
-
-	virtual void update(float time) = 0;
-	virtual void gameLogic() = 0;
-
 };
 
