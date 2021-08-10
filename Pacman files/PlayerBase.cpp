@@ -21,3 +21,21 @@ PlayerBase::PlayerBase(sf::String file, sf::String name, float x, float y, int w
 	sprite_.setTextureRect(sf::IntRect(0, 0, width_, height_));	// задаем спрайту один прямоугольник нужного размера персонажа.
 	//sprite_.scale(0.7f, 0.7f);
 }
+
+PlayerBase::PlayerBase(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map) :
+	x_(x),
+	y_(y),
+	dx_(0),
+	dy_(0),
+	speed_(0),
+	moveDirection_(0),
+	width_(width),
+	height_(height),
+	name_(name),
+	image_(image),
+	gameMap_(map)
+{
+	texture_.loadFromImage(image_);								// ассоциируем текстуру с изображением
+	sprite_.setTexture(texture_);								// заливаем спрайт текстурой
+	sprite_.setTextureRect(sf::IntRect(0, 0, width_, height_));	// задаем спрайту один прямоугольник нужного размера персонажа.
+}

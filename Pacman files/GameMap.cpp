@@ -42,14 +42,15 @@ void GameMap::draw(sf::RenderWindow& window)
 
 void GameMap::generateMap()
 {
-	std::cout << "int generateMap\n";
-	int numberOfCoints = getRandomNumber(1, MaxGoldAmount);
+	srand(time(nullptr));
+
+	int numberOfCoints = 1 + rand() % MaxGoldAmount;
 	lastGeneratedNumberOfCoints = numberOfCoints;
 
 	for (int i = 0; i < numberOfCoints; i++)
 	{
-		int x = getRandomNumber(1, WIDTH_MAP - 1 - 1);
-		int y = getRandomNumber(1, HEIGHT_MAP - 1 - 1);
+		int x = 1 + rand() % (WIDTH_MAP - 1);
+		int y = 1 + rand() % (HEIGHT_MAP - 1);
 
 		if(stringMap_[y][x] == defaultMapTile) // если дефолтная плитка, но на её месте генерируем монетку
 			stringMap_[y][x] = goldTile;
@@ -58,16 +59,6 @@ void GameMap::generateMap()
 			--i;
 			continue;
 		}
-
-		/*if ((x != portal1_x) && (x != portal2_x)) // если x не совпадает с порталами
-			stringMap_[y][x] = goldTile;
-		else if ((y != portal1_y) && (y != portal2_y)) // если совпали x, то остлалось проверить по у
-			stringMap_[y][x] = goldTile;
-		else // повторяем эту итерацию еще раз
-		{
-			--i;
-			continue;
-		}*/
 	}
 
 }

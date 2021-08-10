@@ -94,5 +94,7 @@ public:
 
 	//
 	PlayerBase(sf::String file, sf::String name, float x, float y, int width, int height, GameMap & map);
+	PlayerBase(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map);
+
 };
 

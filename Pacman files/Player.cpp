@@ -11,7 +11,17 @@ Player::Player(sf::String file, sf::String name, float x, float y, int width, in
 	stay_(MoveDir::stay),
 	goldCounter_(0)
 {
+
 }
+
+Player::Player(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map) :
+	PlayerBase(image, name, x, y, width, height, map),
+	stay_(MoveDir::stay),
+	goldCounter_(0)
+{
+
+}
+
 
 void Player::move(float & currentFrame, float time)
 {

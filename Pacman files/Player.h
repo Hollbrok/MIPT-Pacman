@@ -36,8 +36,9 @@ public:
 
 
 //
+
 	Player(sf::String file, sf::String name, float x, float y, int width, int height, GameMap & map);
-	
+	Player(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map);
 
 	void move(float & currentFrame, float time);
 	void update(float time);

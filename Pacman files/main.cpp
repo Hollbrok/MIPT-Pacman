@@ -19,8 +19,12 @@ int main()
 	Player mainHero(sf::String("main3.png"), sf::String("MAIN"), 320, 240, 25, 32, map);
 	mainHero.setView(&playerView);
 
-	Enemy enemy1(sf::String("sonic.gif"), sf::String("1Enemy"), 400, 120, 42, 34, map);
-	Enemy enemy2(sf::String("sonic.gif"), sf::String("2Enemy"), 500, 400, 46, 35, map);
+	sf::Image sonic;
+	sonic.loadFromFile("images/sonic.gif");
+	sonic.createMaskFromColor(sf::Color(0, 128, 0));
+
+	Enemy enemy1(sonic, sf::String("1Enemy"), 400, 120, 42, 34, map);
+	Enemy enemy2(sonic, sf::String("2Enemy"), 500, 400, 46, 35, map);
 	
 	//mainHero.setMap(map);
 
