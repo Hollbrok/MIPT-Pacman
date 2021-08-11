@@ -27,14 +27,16 @@ public:
 	sf::Image image_;
 	sf::Texture texture_;
 	sf::Sprite sprite_;
+	
 	sf::View* playerView_;
 
-	GameMap& gameMap_;
+	GameMap* gameMap_;
 
-	bool isLife_ = false;
+	bool isLife_ = true;
 	bool isMove_ = false;
 
-//public:
+//
+public:
 
 
 	// GETTERS
@@ -66,12 +68,32 @@ public:
 	sf::Sprite& getSprite() { return sprite_; }
 	const sf::Sprite& getSprite() const { return sprite_; }
 
+	sf::Texture& getTexture() { return texture_; }
+	const sf::Texture& getTexture() const { return texture_; }
+
+
+	sf::Image& getImage() { return image_; }
+	const sf::Image& getImage() const { return image_; }
 
 	sf::View& getView() { return *playerView_; }
-	const sf::View& getView() const { return *playerView_; }
+	//const sf::View& getView() const { return *playerView_; }
 
-	GameMap& getMap() { return gameMap_; }
-	const GameMap& getMap() const { return gameMap_; }
+	//const sf::View getView() const { return *playerView_; }
+
+	sf::String& getName() { return name_; }
+	const sf::String& getName() const { return name_; }
+
+	sf::String& getFile() { return file_; }
+	const sf::String& getFile() const { return file_; }
+
+
+	GameMap* getPMap() { return gameMap_; }
+
+	GameMap & getMap() { return *gameMap_; }
+	const GameMap & getMap() const { return *gameMap_; }
+
+	float & getMoveTimer() { return moveTime_; }
+	const float& getMoveTimer() const { return moveTime_; }
 
 
 	// SETTERS
@@ -90,11 +112,40 @@ public:
 
 	void setView(sf::View* playerView) { playerView_ = playerView; };
 
-	void setMap(GameMap& map) { gameMap_ = map; }
+	void setMap(GameMap * map) { gameMap_ = map; }
 
 	//
-	PlayerBase(sf::String file, sf::String name, float x, float y, int width, int height, GameMap & map);
-	PlayerBase(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map);
+	PlayerBase(sf::String file, sf::String name, float x, float y, int width, int height, GameMap * map);
+	PlayerBase(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap * map);
 
+	/*PlayerBase& operator=(const PlayerBase& obj)
+	{
+		x_ = obj.getX();
+		y_ = obj.getY();
+
+		dx_ = obj.getDx();
+		dy_ = obj.getDy();;
+
+		speed_ = obj.getSpeed();
+		moveDirection_ = obj.getMoveDirection();
+
+
+		width_ = obj.getW();		
+		height_ = obj.getH();		
+
+		moveTime_ = obj.getMoveTimer();
+		name_ = obj.getName();
+
+		file_ = obj.getFile();
+		image_ = obj.getImage();
+		texture_ = obj.getTexture();
+		sprite_ = obj.getSprite();
+		playerView_ = obj.getView();
+
+		gameMap_ = obj.getPMap();
+
+		isLife_ = true;
+		isMove_ = false;
+	}*/
 };
 

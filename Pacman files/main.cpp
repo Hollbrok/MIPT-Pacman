@@ -6,6 +6,7 @@
 #include "Consts.h"
 #include "DEBUG_STAFF.h"
 #include "Enemy.h"
+#include "ObjectsList.hpp"
 
 
 int main()
@@ -16,15 +17,25 @@ int main()
 	GameMap map{};
 	map.generateMap();
 
-	Player mainHero(sf::String("main3.png"), sf::String("MAIN"), 320, 240, 25, 32, map);
+	Player mainHero(sf::String("main3.png"), sf::String("MAIN"), 320, 240, 25, 32, &map);
 	mainHero.setView(&playerView);
 
 	sf::Image sonic;
 	sonic.loadFromFile("images/sonic.gif");
 	sonic.createMaskFromColor(sf::Color(0, 128, 0));
 
-	Enemy enemy1(sonic, sf::String("1Enemy"), 400, 120, 42, 34, map);
-	Enemy enemy2(sonic, sf::String("2Enemy"), 500, 400, 46, 35, map);
+
+	std::vector<Enemy> enemyVector;
+
+	Enemy enemy1(sonic, sf::String("1Enemy"), 400, 120, 42, 34, &map);
+	Enemy enemy2(sonic, sf::String("2Enemy"), 500, 400, 46, 35, &map);
+
+	enemyVector.push_back(enemy1);
+	enemyVector.push_back(enemy2);
+
+	ObjectsList<Enemy> objectsList(enemyVector);
+	//Enemy enemy1(sonic, sf::String("1Enemy"), 400, 120, 42, 34, map);
+	//Enemy enemy2(sonic, sf::String("2Enemy"), 500, 400, 46, 35, map);
 	
 	//mainHero.setMap(map);
 
@@ -76,8 +87,8 @@ int main()
 
 
 		mainHero.update(time);
-		enemy1.update(time);
-		enemy2.update(time);
+
+		objectsList.update(time);
 
 		start = std::chrono::high_resolution_clock::now();
 
@@ -88,8 +99,8 @@ int main()
 		mainHero.getMap().draw(window);
 		
 		window.draw(mainHero.getSprite());
-		window.draw(enemy1.getSprite());
-		window.draw(enemy2.getSprite());
+		
+		objectsList.draw(window);
 
 		drawText(window, goldCollectedText, mainHero);
 

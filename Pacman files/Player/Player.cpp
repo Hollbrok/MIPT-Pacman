@@ -6,7 +6,7 @@
 
 
 
-Player::Player(sf::String file, sf::String name, float x, float y, int width, int height, GameMap& map) :
+Player::Player(sf::String file, sf::String name, float x, float y, int width, int height, GameMap * map) :
 	PlayerBase(file, name, x, y, width, height, map),
 	stay_(MoveDir::stay),
 	goldCounter_(0)
@@ -14,7 +14,7 @@ Player::Player(sf::String file, sf::String name, float x, float y, int width, in
 
 }
 
-Player::Player(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map) :
+Player::Player(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap * map) :
 	PlayerBase(image, name, x, y, width, height, map),
 	stay_(MoveDir::stay),
 	goldCounter_(0)
@@ -103,7 +103,7 @@ void Player::gameLogic()
 		for (int i = int(y_ / 21) + 1; i < (y_ + height_) / 21; i++)
 		{
 			//std::cout << "\ni " << i << std::endl;
-			if (gameMap_.stringMap_[i][j] == borderTile)
+			if (gameMap_->stringMap_[i][j] == borderTile)
 			{
 				std::cout << "borderTile" << std::endl;
 				if (dy_ > 0)
@@ -116,31 +116,31 @@ void Player::gameLogic()
 					x_ = j * 20 + 20;
 
 			}
-			else if (gameMap_.stringMap_[i][j] == bonfireTile)
+			else if (gameMap_->stringMap_[i][j] == bonfireTile)
 			{
 				std::cout << "bonfireTile" << std::endl;
 				x_ = 320;
 				y_ = 340;
-				gameMap_.stringMap_[i][j] = defaultMapTile;
+				gameMap_->stringMap_[i][j] = defaultMapTile;
 			}
-			else if (gameMap_.stringMap_[i][j] == goldTile)
+			else if (gameMap_->stringMap_[i][j] == goldTile)
 			{
-				gameMap_.stringMap_[i][j] = defaultMapTile;
+				gameMap_->stringMap_[i][j] = defaultMapTile;
 
 				goldCounter_++;
 				lastGoldCounter++;
 
-				std::cout << "lastGeneratedNumberOfCoints: " << gameMap_.lastGeneratedNumberOfCoints << std::endl;
+				std::cout << "lastGeneratedNumberOfCoints: " << gameMap_->lastGeneratedNumberOfCoints << std::endl;
 				std::cout << "gold: " << goldCounter_ << std::endl;
 				std::cout << "lastGoldCounter: " << lastGoldCounter << std::endl;
 
-				if (lastGoldCounter == gameMap_.lastGeneratedNumberOfCoints)
+				if (lastGoldCounter == gameMap_->lastGeneratedNumberOfCoints)
 				{
-					gameMap_.generateMap();
+					gameMap_->generateMap();
 					lastGoldCounter = 0;
 				}
 			}
-			else if (gameMap_.stringMap_[i][j] == portalTile)
+			else if (gameMap_->stringMap_[i][j] == portalTile)
 			{
 				int newExit_x = 0;
 				int newExit_y = 0;

@@ -1,6 +1,6 @@
 #include "PlayerBase.h"
 
-PlayerBase::PlayerBase(sf::String file, sf::String name, float x, float y, int width, int height, GameMap & map) :
+PlayerBase::PlayerBase(sf::String file, sf::String name, float x, float y, int width, int height, GameMap * map) :
 	x_(x),
 	y_(y),
 	dx_(0),
@@ -22,7 +22,7 @@ PlayerBase::PlayerBase(sf::String file, sf::String name, float x, float y, int w
 	//sprite_.scale(0.7f, 0.7f);
 }
 
-PlayerBase::PlayerBase(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map) :
+PlayerBase::PlayerBase(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap * map) :
 	x_(x),
 	y_(y),
 	dx_(0),

@@ -3,7 +3,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(sf::String file, sf::String name, float x, float y, int width, int height, GameMap& map) :
+Enemy::Enemy(sf::String file, sf::String name, float x, float y, int width, int height, GameMap * map) :
 	PlayerBase(file, name, x, y, width, height, map)
 {
 
@@ -13,23 +13,25 @@ Enemy::Enemy(sf::String file, sf::String name, float x, float y, int width, int 
 	
 	if (name == "1Enemy")
 	{
+		int typeOfEnemy_ = 1;
 		moveTime_ = 0.0f;
 		dy_ = 0.1;
 		sprite_.setTextureRect(sf::IntRect(4, 18, width_, height_));
 	}
 	else if (name == "2Enemy")
 	{
+		int typeOfEnemy_ = 2;
 		moveTime_ = 0.0f;
 		dx_ = 0.1;
 		sprite_.setTextureRect(sf::IntRect(249, 400, width_, height_));
 	}
 	else
 	{
-		;
+		int typeOfEnemy_ = 3;
 	}
 }
 
-Enemy::Enemy(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap& map) :
+Enemy::Enemy(sf::Image image, sf::String name, float x, float y, int width, int height, GameMap * map) :
 	PlayerBase(image, name, x, y, width, height, map)
 {
 	if (name == "1Enemy")
